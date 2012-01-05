@@ -22,3 +22,7 @@
 
 cdef extern from "bootstrap.h":
 	cdef void bootstrap()
+
+
+def initialize():
+	bootstrap()

@@ -18,13 +18,19 @@ def genExtensions(*pyrokitSources):
             [
                 'src/ShellRenderInterfaceOpenGL.cpp',
                 'src/Panda3DSystemInterface.cpp',
+                'src/bootstrap.cpp',
                 ] + list(pyrokitSources),
             language='c++',
             include_dirs=[
+                '/usr/include/panda3d',
                 'src',
+                ],
+            library_dirs=[
+                '/usr/lib/panda3d',
                 ],
             libraries=[
                 'RocketCore',
+                'GL',
                 #TODO: How many of these are actually needed?
                 'p3framework',
                 'panda',

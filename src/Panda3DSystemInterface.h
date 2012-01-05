@@ -5,8 +5,8 @@
 
 #include <Rocket/Core/SystemInterface.h>
 
-#include "panda3d/pointerTo.h"
-#include "panda3d/clockObject.h"
+#include "pointerTo.h"
+#include "clockObject.h"
 
 
 class Panda3DSystemInterface : public Rocket::Core::SystemInterface
