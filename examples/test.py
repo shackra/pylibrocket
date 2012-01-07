@@ -7,9 +7,6 @@ from direct.actor.Actor import Actor
 from direct.interval.IntervalGlobal import Sequence
 from panda3d.core import Point3, PythonCallbackObject, CallbackNode
 
-# OpenGL imports
-import OpenGL.GL
-
 import pyrokit
 
 import rocket
@@ -37,7 +34,7 @@ class MyApp(ShowBase):
         os.chdir(os.path.dirname(__file__))
         self.rocketContext.LoadDocument('data/demo.rml').Show()
 
-        rocketCB = PythonCallbackObject(self.renderCallback)
+        rocketCB = PythonCallbackObject(pyrokit.manager.render)
         self.cbNode = CallbackNode("Rocket")
         self.cbNode.setDrawCallback(rocketCB)
         self.render2d.attachNewNode(self.cbNode)
@@ -89,40 +86,6 @@ class MyApp(ShowBase):
 
     def windowEvent(self, window):
         self.rocketContext.dimensions = rocket.Vector2i(window.getXSize(), window.getYSize())
-
-    def renderCallback(self, data):
-        self.rocketContext.Update()
-
-        #x = self.cursorX
-        #y = self.cursorY
-
-        #if self._mouseEnabled and base.mouseWatcherNode.hasMouse():
-        #    x += base.mouseWatcherNode.getMouseX()
-        #    y += base.mouseWatcherNode.getMouseY()
-
-        ## Translate absolute [-1,1] coordinates to pixels
-        #x = base.win.getXSize() * (1 + x) / 2
-        #y = base.win.getYSize() * (1 - y) / 2
-
-        #self.System.injectMousePosition(x, y)
-
-        #XXX: Kludge to fix librocket when shaders are enabled??
-        OpenGL.GL.glActiveTexture(OpenGL.GL.GL_TEXTURE0)
-
-        OpenGL.GL.glClearColor(1.0, 0.0, 0.0, 1.0)
-        OpenGL.GL.glEnableClientState(OpenGL.GL.GL_VERTEX_ARRAY)
-        OpenGL.GL.glEnableClientState(OpenGL.GL.GL_COLOR_ARRAY)
-
-        OpenGL.GL.glEnable(OpenGL.GL.GL_BLEND)
-        OpenGL.GL.glBlendFunc(OpenGL.GL.GL_SRC_ALPHA, OpenGL.GL.GL_ONE_MINUS_SRC_ALPHA)
-        OpenGL.GL.glMatrixMode(OpenGL.GL.GL_PROJECTION)
-        OpenGL.GL.glLoadIdentity()
-        OpenGL.GL.glOrtho(0, self.win.getXSize(), self.win.getYSize(), 0, -100, 10000000)
-
-        OpenGL.GL.glMatrixMode(OpenGL.GL.GL_MODELVIEW)
-        OpenGL.GL.glLoadIdentity()
-
-        self.rocketContext.Render()
 
 
 app = MyApp()
