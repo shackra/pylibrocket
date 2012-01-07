@@ -14,7 +14,7 @@
  *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -28,13 +28,17 @@
 #ifndef ROCKETSHELLRENDERINTERFACE_H
 #define ROCKETSHELLRENDERINTERFACE_H
 
-#include "Rocket/Core/RenderInterface.h"
+#include <Rocket/Core/RenderInterface.h>
 #include "ShellOpenGL.h"
 
 /**
 	Low level OpenGL render interface for Rocket
 	@author Peter Curry
  */
+
+void startFrame(int viewportWidth, int viewportHeight);
+
+void endFrame();
 
 class ShellRenderInterfaceOpenGL : public Rocket::Core::RenderInterface
 {
