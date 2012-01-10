@@ -4,22 +4,6 @@
 import rocket
 
 
-#cdef extern from "Rocket/Core.h" namespace "":
-#    cdef cppclass Rectangle:
-#        Rectangle(int, int, int, int)
-#        int x0, y0, x1, y1
-#        int getLength()
-#        int getHeight()
-#        int getArea()
-#        void move(int, int)
-#
-#    cdef cppclass Foo:
-#        Foo()
-#
-#cdef Rectangle *rec = new Rectangle(1, 2, 3, 4)
-#cdef int recLength = rec.getLength()
-#
-#cdef Foo foo
 cdef extern from "ShellRenderInterfaceOpenGL.h":
     void startFrame(int, int)
     void endFrame()
@@ -63,11 +47,8 @@ def initialize(mouseWatcher):
     manager = _PyrokitManager(mouseWatcher)
 
 
-cdef void renderCallback():
-    manager.render()
-
 cdef createInputHandler(node):
-    cdef long dataPtr=node.this
+    cdef long dataPtr = node.this
     cdef NodePath* cppNodePath = <NodePath*> dataPtr
 
     createRocketInputHandler(cppNodePath)
