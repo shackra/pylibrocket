@@ -21,7 +21,7 @@ class MyApp(ShowBase):
 
         self.loadModels()
 
-        pyrokit.initialize()
+        pyrokit.initialize(self.mouseWatcher)
 
         self.rocketContext = rocket.CreateContext('main', rocket.Vector2i(self.win.getXSize(), self.win.getYSize()))
 

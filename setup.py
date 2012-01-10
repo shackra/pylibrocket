@@ -16,6 +16,7 @@ def genExtensions(*pyrokitSources):
     return [Extension(
             'pyrokit',
             [
+                'src/rocketInputHandler.cxx',
                 'src/ShellRenderInterfaceOpenGL.cpp',
                 'src/Panda3DSystemInterface.cpp',
                 'src/bootstrap.cpp',
