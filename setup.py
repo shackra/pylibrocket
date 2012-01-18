@@ -1,6 +1,8 @@
 #!/usr/bin/python
 
+import os
 import sys
+import warnings
 from setuptools import setup
 from distutils.extension import Extension
 
@@ -12,44 +14,16 @@ version = 'hg-r' + rev
 print "setup.py: Running on mercurial revision", rev
 
 
-def genExtensions(*pyrokitSources):
-    return [Extension(
-            'pyrokit',
-            [
-                'src/rocketInputHandler.cxx',
-                'src/ShellRenderInterfaceOpenGL.cpp',
-                'src/Panda3DSystemInterface.cpp',
-                'src/bootstrap.cpp',
-                ] + list(pyrokitSources),
-            language='c++',
-            include_dirs=[
-                '/usr/include/panda3d',
-                'src',
-                ],
-            library_dirs=[
-                '/usr/lib/panda3d',
-                ],
-            libraries=[
-                'RocketCore',
-                'GL',
-                #TODO: How many of these are actually needed?
-                'p3framework',
-                'panda',
-                'pandafx',
-                'pandaexpress',
-                'p3dtoolconfig',
-                'p3dtool',
-                'p3pystub',
-                'p3direct',
-                ],
-            )]
+# Check to see if the user disabled code generation.
+tryCodeGeneration = True
+if '--no-generate' in sys.argv:
+    sys.argv.remove('--no-generate')
+    tryCodeGeneration = False
 
-
-def extensionsNoBuild():
-    return genExtensions('src/pyrokit.cpp')
-
-
-def extensionsBuild():
+# If code generation wasn't explicitly disabled, try importing cythonize so we
+# can enable code generation.
+generateCode = False
+if tryCodeGeneration:
     try:
         from Cython.Build import cythonize
 
@@ -57,26 +31,113 @@ def extensionsBuild():
         print "setup.py: You don't seem to have Cython installed. You can get"
         print "it from www.cython.org."
         print "setup.py: Continuing build using the last translated sources;"
-        print "any updates to the .pyx file will be IGNORED."
-        return extensionsNoBuild()
+        print "any updates to the .pyx files will be IGNORED."
 
-    return cythonize(genExtensions('src/pyrokit.pyx'))
-
-
-if '--nobuild' in sys.argv:
-    sys.argv.remove('--nobuild')
-    ext_modules = extensionsNoBuild()
-
-else:
-    ext_modules = extensionsBuild()
+    else:
+        generateCode = True
 
 
-setup(name='pyrokit',
+def genCythonExtension(name, cythonSources, otherSources, **kwargs):
+    """Helper function to generate a Cython-based extension definition.
+
+    If Cython can be imported (see check above), return an Extension which uses
+    Cython to generate C/C++ source files; otherwise, return an Extension which
+    attempts to use pre-generated source files.
+
+    """
+    if generateCode:
+        return Extension(
+                name,
+                otherSources + cythonSources,
+                **kwargs
+                )
+
+    else:
+        targetExtension = '.c'
+        if kwargs.get('language', 'c') == 'c++':
+            targetExtension = '.cpp'
+
+        def translateCythonSourceFilename(cythonSource):
+            if not cythonSource.endswith('.pyx'):
+                warnings.warn("Cython source file %r doesn't end with '.pyx'!"
+                        % (cythonSource, ),
+                        RuntimeWarning
+                        )
+
+            translatedFilename = cythonSource.replace('.pyx', targetExtension)
+
+            if not os.path.exists(translatedFilename):
+                raise RuntimeError("Generated source file %r doesn't exist!"
+                        % (translatedFilename, )
+                        )
+
+            return translatedFilename
+
+        preGeneratedCythonSources = [
+                translateCythonSourceFilename(sourceFile)
+                for sourceFile in cythonSources
+                ]
+
+        return Extension(
+                name,
+                otherSources + preGeneratedCythonSources,
+                **kwargs
+                )
+
+
+def genExt_pyrokit(setupKwargs):
+    setupKwargs.setdefault('ext_modules', []).append(
+            genCythonExtension(
+                'pyrokit',
+                [
+                    'src/pyrokit.pyx',
+                    ],
+                [
+                    'src/rocketInputHandler.cxx',
+                    'src/ShellRenderInterfaceOpenGL.cpp',
+                    'src/Panda3DSystemInterface.cpp',
+                    'src/bootstrap.cpp',
+                    ],
+                language='c++',
+                include_dirs=[
+                    '/usr/include/panda3d',
+                    'src',
+                    ],
+                library_dirs=[
+                    '/usr/lib/panda3d',
+                    ],
+                libraries=[
+                    'RocketCore',
+                    'GL',
+                    #TODO: How many of these are actually needed?
+                    'p3framework',
+                    'panda',
+                    'pandafx',
+                    'pandaexpress',
+                    'p3dtoolconfig',
+                    'p3dtool',
+                    'p3pystub',
+                    'p3direct',
+                    ],
+                )
+            )
+
+
+setupKwargs = dict(
+        name='pyrokit',
         version=version,
-        description='Bootstrap librocket System and Render interfaces from Python',
+        description='Bootstrap librocket from Python',
         author='whitelynx',
         author_email='whitelynx@gmail.com',
         license='MIT',
         url='http://bitbucket.org/skewedaspect/pyrokit',
-        ext_modules=ext_modules
         )
+
+# Add enabled extensions
+genExt_pyrokit(setupKwargs)
+
+if generateCode and 'ext_modules' in setupKwargs:
+    setupKwargs['ext_modules'] = cythonize(setupKwargs['ext_modules'])
+
+# Make it a distribution!
+setup(**setupKwargs)
