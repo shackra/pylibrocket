@@ -89,6 +89,20 @@ def genExt_pyrokit(setupKwargs):
     setupKwargs.setdefault('package_dir', {})['pyrokit'] = 'src'
     setupKwargs.setdefault('packages', []).append('pyrokit')
 
+    setupKwargs.setdefault('ext_modules', []).append(
+            genCythonExtension(
+                'pyrokit.rocket_init',
+                [
+                    'src/rocket_init.pyx',
+                    ],
+                [],
+                language='c++',
+                libraries=[
+                    'RocketCore',
+                    ],
+                )
+            )
+
 
 def genExt_pyrokit_opengl(setupKwargs):
     setupKwargs.setdefault('ext_modules', []).append(
