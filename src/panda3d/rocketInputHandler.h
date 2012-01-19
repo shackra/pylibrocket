@@ -29,52 +29,60 @@ namespace Rocket {
 // Description : DataNode that listens for keyboard and mouse
 //               events and passes them to libRocket.
 ////////////////////////////////////////////////////////////////////
-class EXPCL_ROCKET RocketInputHandler : public DataNode {
-PUBLISHED:
-  RocketInputHandler(const string &name = string());
-  virtual ~RocketInputHandler();
+class EXPCL_ROCKET RocketInputHandler : public DataNode
+{
+	PUBLISHED:
+	  RocketInputHandler(const string &name = string());
+	  virtual ~RocketInputHandler();
 
-public:
-  void update_context(Rocket::Core::Context *context, int xoffs, int yoffs);
+	public:
+	  void update_context(Rocket::Core::Context *context, int xoffs, int yoffs);
 
-protected:
-  // Inherited from DataNode
-  virtual void do_transmit_data(DataGraphTraverser *trav,
-                                const DataNodeTransmit &input,
-                                DataNodeTransmit &output);
+	protected:
+	  // Inherited from DataNode
+	  virtual void do_transmit_data(DataGraphTraverser *trav, const DataNodeTransmit &input, DataNodeTransmit &output);
 
-private:
-  Mutex _lock;
+	private:
+	  Mutex _lock;
 
-  // inputs
-  int _pixel_xy_input;
-  int _button_events_input;
+	  // inputs
+	  int _pixel_xy_input;
+	  int _button_events_input;
 
-  LVecBase2 _mouse_xy;
-  bool _mouse_xy_changed;
-  int _modifiers;
-  int _wheel_delta;
-  typedef pmap<int, bool> ButtonActivityMap;
-  ButtonActivityMap _mouse_buttons;
-  ButtonActivityMap _keys;
-  pvector<short> _text_input;
+	  LVecBase2 _mouse_xy;
+	  bool _mouse_xy_changed;
+	  int _modifiers;
+	  int _wheel_delta;
+	  typedef pmap<int, bool> ButtonActivityMap;
+	  ButtonActivityMap _mouse_buttons;
+	  ButtonActivityMap _keys;
+	  pvector<short> _text_input;
 
-public:
-  static TypeHandle get_class_type() {
-    return _type_handle;
-  }
-  static void init_type() {
-    DataNode::init_type();
-    register_type(_type_handle, "RocketInputHandler",
-                  DataNode::get_class_type());
-  }
-  virtual TypeHandle get_type() const {
-    return get_class_type();
-  }
-  virtual TypeHandle force_init_type() {init_type(); return get_class_type();}
+	public:
+	  static TypeHandle get_class_type()
+	  {
+		return _type_handle;
+	  }
 
-private:
-  static TypeHandle _type_handle;
+	  static void init_type()
+	  {
+		DataNode::init_type();
+		register_type(_type_handle, "RocketInputHandler", DataNode::get_class_type());
+	  }
+
+	  virtual TypeHandle get_type() const
+	  {
+		return get_class_type();
+	  }
+
+	  virtual TypeHandle force_init_type()
+	  {
+		  init_type();
+		  return get_class_type();
+	  }
+
+	private:
+	  static TypeHandle _type_handle;
 };
 
 #endif
