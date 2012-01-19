@@ -165,6 +165,8 @@ setupKwargs = dict(
 
 # Add enabled extensions
 genExt_pyrokit(setupKwargs)
+genExt_pyrokit_panda3d(setupKwargs)
+genExt_pyrokit_opengl(setupKwargs)
 
 if generateCode and 'ext_modules' in setupKwargs:
     setupKwargs['ext_modules'] = cythonize(setupKwargs['ext_modules'])
