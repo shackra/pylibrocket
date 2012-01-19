@@ -1,0 +1,19 @@
+syntax: glob
+
+# setup.py artifacts
+build/**
+
+# pycharm artifacts
+.idea**
+.idea/**
+
+# vim artifacts
+**.swp
+**.swo
+
+# run artifacts
+**.log
+
+# python bytecode artifacts
+**.pyc
+**.pyo

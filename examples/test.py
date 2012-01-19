@@ -8,6 +8,8 @@ from direct.interval.IntervalGlobal import Sequence
 from panda3d.core import Point3, PythonCallbackObject, CallbackNode
 
 import pyrokit
+import pyrokit.opengl
+import pyrokit.panda3d
 
 import rocket
 
@@ -21,7 +23,10 @@ class MyApp(ShowBase):
 
         self.loadModels()
 
-        pyrokit.initialize(self.mouseWatcher)
+        pyrokit.opengl.initializeRenderer()
+        pyrokit.panda3d.initializeSystem()
+        pyrokit.panda3d.initializeInput(self.mouseWatcher)
+        pyrokit.manager.finishInitialization()
 
         self.rocketContext = rocket.CreateContext('main', rocket.Vector2i(self.win.getXSize(), self.win.getYSize()))
 

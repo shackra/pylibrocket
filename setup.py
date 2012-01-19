@@ -86,29 +86,73 @@ def genCythonExtension(name, cythonSources, otherSources, **kwargs):
 
 
 def genExt_pyrokit(setupKwargs):
+    setupKwargs.setdefault('package_dir', {})['pyrokit'] = 'src'
+    setupKwargs.setdefault('packages', []).append('pyrokit')
+
     setupKwargs.setdefault('ext_modules', []).append(
             genCythonExtension(
-                'pyrokit',
+                'pyrokit.rocket_init',
                 [
-                    'src/pyrokit.pyx',
+                    'src/rocket_init.pyx',
+                    ],
+                [],
+                language='c++',
+                libraries=[
+                    'RocketCore',
+                    ],
+                )
+            )
+
+
+def genExt_pyrokit_opengl(setupKwargs):
+    setupKwargs.setdefault('ext_modules', []).append(
+            genCythonExtension(
+                'pyrokit.opengl',
+                [
+                    'src/opengl/opengl.pyx',
                     ],
                 [
-                    'src/rocketInputHandler.cxx',
-                    'src/ShellRenderInterfaceOpenGL.cpp',
-                    'src/Panda3DSystemInterface.cpp',
-                    'src/bootstrap.cpp',
+                    'src/opengl/ShellRenderInterfaceOpenGL.cpp',
+                    'src/opengl/bootstrap.cpp',
                     ],
                 language='c++',
+                include_dirs=[
+                    'src',
+                    ],
+                libraries=[
+                    'RocketCore',
+                    'GL',
+                    ],
+                )
+            )
+
+
+def genExt_pyrokit_panda3d(setupKwargs):
+    setupKwargs.setdefault('ext_modules', []).append(
+            genCythonExtension(
+                'pyrokit.panda3d',
+                [
+                    'src/panda3d/panda3d.pyx',
+                    ],
+                [
+                    'src/panda3d/rocketInputHandler.cxx',
+                    'src/panda3d/Panda3DSystemInterface.cpp',
+                    'src/panda3d/bootstrap.cpp',
+                    ],
+                language='c++',
+                #TODO: Remove the need for the explicit panda3d include dir
+                # here; instead, #include statements should be including
+                # "panda3d/___.h".
                 include_dirs=[
                     '/usr/include/panda3d',
                     'src',
                     ],
+                #TODO: Make this more cross-platform!
                 library_dirs=[
                     '/usr/lib/panda3d',
                     ],
                 libraries=[
                     'RocketCore',
-                    'GL',
                     #TODO: How many of these are actually needed?
                     'p3framework',
                     'panda',
@@ -135,6 +179,8 @@ setupKwargs = dict(
 
 # Add enabled extensions
 genExt_pyrokit(setupKwargs)
+genExt_pyrokit_panda3d(setupKwargs)
+genExt_pyrokit_opengl(setupKwargs)
 
 if generateCode and 'ext_modules' in setupKwargs:
     setupKwargs['ext_modules'] = cythonize(setupKwargs['ext_modules'])
