@@ -230,9 +230,9 @@
 #define _USE_MATH_DEFINES
 #endif
 #include <math.h>
-#define __PYX_HAVE__panda3d
-#define __PYX_HAVE_API__panda3d
-#include "nodePath.h"
+#define __PYX_HAVE__opengl
+#define __PYX_HAVE_API__opengl
+#include "ShellRenderInterfaceOpenGL.h"
 #include "bootstrap.h"
 #ifdef _OPENMP
 #include <omp.h>
@@ -316,7 +316,7 @@ static const char *__pyx_filename;
 
 
 static const char *__pyx_f[] = {
-  "panda3d.pyx",
+  "opengl.pyx",
 };
 
 /*--- Type declarations ---*/
@@ -363,13 +363,6 @@ static const char *__pyx_f[] = {
 
 static PyObject *__Pyx_GetName(PyObject *dict, PyObject *name); /*proto*/
 
-static CYTHON_INLINE int __Pyx_NegateNonNeg(int b) { 
-    return unlikely(b < 0) ? b : !b; 
-}
-static CYTHON_INLINE PyObject* __Pyx_PyBoolOrNull_FromLong(long b) {
-    return unlikely(b < 0) ? NULL : __Pyx_PyBool_FromLong(b);
-}
-
 static PyObject *__Pyx_Import(PyObject *name, PyObject *from_list, long level); /*proto*/
 
 static CYTHON_INLINE unsigned char __Pyx_PyInt_AsUnsignedChar(PyObject *);
@@ -411,77 +404,91 @@ static void __Pyx_AddTraceback(const char *funcname, int __pyx_clineno,
 
 static int __Pyx_InitStrings(__Pyx_StringTabEntry *t); /*proto*/
 
-/* Module declarations from 'panda3d' */
-static PyObject *__pyx_f_7panda3d_createInputHandler(PyObject *); /*proto*/
-#define __Pyx_MODULE_NAME "panda3d"
-int __pyx_module_is_main_panda3d = 0;
+/* Module declarations from 'opengl' */
+#define __Pyx_MODULE_NAME "opengl"
+int __pyx_module_is_main_opengl = 0;
 
-/* Implementation of 'panda3d' */
-static char __pyx_k_1[] = "framePreContextCallbacks";
-static char __pyx_k_2[] = "addFramePreContextCallback";
-static char __pyx_k_3[] = "Initialize Panda3D integration.\n\n";
-static char __pyx_k__name[] = "name";
-static char __pyx_k__this[] = "this";
+/* Implementation of 'opengl' */
+static char __pyx_k_1[] = "addFramePreContextCallback";
+static char __pyx_k_2[] = "addFramePostContextCallback";
+static char __pyx_k_3[] = "Initialize the OpenGL render interface.\n\n";
+static char __pyx_k__x[] = "x";
+static char __pyx_k__y[] = "y";
+static char __pyx_k__opengl[] = "opengl";
 static char __pyx_k__manager[] = "manager";
-static char __pyx_k__panda3d[] = "panda3d";
 static char __pyx_k__pyrokit[] = "pyrokit";
 static char __pyx_k____main__[] = "__main__";
 static char __pyx_k____test__[] = "__test__";
+static char __pyx_k__dimensions[] = "dimensions";
 static char __pyx_k__framePreContext[] = "framePreContext";
-static char __pyx_k__initializeInput[] = "initializeInput";
-static char __pyx_k__initializeSystem[] = "initializeSystem";
+static char __pyx_k__framePostContext[] = "framePostContext";
+static char __pyx_k__initializeRenderer[] = "initializeRenderer";
 static PyObject *__pyx_n_s_1;
 static PyObject *__pyx_n_s_2;
 static PyObject *__pyx_n_s____main__;
 static PyObject *__pyx_n_s____test__;
+static PyObject *__pyx_n_s__dimensions;
+static PyObject *__pyx_n_s__framePostContext;
 static PyObject *__pyx_n_s__framePreContext;
-static PyObject *__pyx_n_s__initializeInput;
-static PyObject *__pyx_n_s__initializeSystem;
+static PyObject *__pyx_n_s__initializeRenderer;
 static PyObject *__pyx_n_s__manager;
-static PyObject *__pyx_n_s__name;
-static PyObject *__pyx_n_s__panda3d;
+static PyObject *__pyx_n_s__opengl;
 static PyObject *__pyx_n_s__pyrokit;
-static PyObject *__pyx_n_s__this;
+static PyObject *__pyx_n_s__x;
+static PyObject *__pyx_n_s__y;
 
-/* "panda3d.pyx":17
+/* "opengl.pyx":15
  * 
  * 
  * def framePreContext(context):             # <<<<<<<<<<<<<<
- *     updateContext(context.name)
+ *     startFrame(context.dimensions.x, context.dimensions.y)
  * 
  */
 
-static PyObject *__pyx_pf_7panda3d_framePreContext(PyObject *__pyx_self, PyObject *__pyx_v_context); /*proto*/
-static PyMethodDef __pyx_mdef_7panda3d_framePreContext = {__Pyx_NAMESTR("framePreContext"), (PyCFunction)__pyx_pf_7panda3d_framePreContext, METH_O, __Pyx_DOCSTR(0)};
-static PyObject *__pyx_pf_7panda3d_framePreContext(PyObject *__pyx_self, PyObject *__pyx_v_context) {
+static PyObject *__pyx_pf_6opengl_framePreContext(PyObject *__pyx_self, PyObject *__pyx_v_context); /*proto*/
+static PyMethodDef __pyx_mdef_6opengl_framePreContext = {__Pyx_NAMESTR("framePreContext"), (PyCFunction)__pyx_pf_6opengl_framePreContext, METH_O, __Pyx_DOCSTR(0)};
+static PyObject *__pyx_pf_6opengl_framePreContext(PyObject *__pyx_self, PyObject *__pyx_v_context) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
-  char *__pyx_t_2;
+  PyObject *__pyx_t_2 = NULL;
+  int __pyx_t_3;
+  int __pyx_t_4;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("framePreContext");
   __pyx_self = __pyx_self;
 
-  /* "panda3d.pyx":18
+  /* "opengl.pyx":16
  * 
  * def framePreContext(context):
- *     updateContext(context.name)             # <<<<<<<<<<<<<<
+ *     startFrame(context.dimensions.x, context.dimensions.y)             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_1 = PyObject_GetAttr(__pyx_v_context, __pyx_n_s__name); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 18; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyObject_GetAttr(__pyx_v_context, __pyx_n_s__dimensions); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 16; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyBytes_AsString(__pyx_t_1); if (unlikely((!__pyx_t_2) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 18; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyObject_GetAttr(__pyx_t_1, __pyx_n_s__x); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 16; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  updateContext(__pyx_t_2);
+  __pyx_t_3 = __Pyx_PyInt_AsInt(__pyx_t_2); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 16; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = PyObject_GetAttr(__pyx_v_context, __pyx_n_s__dimensions); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 16; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_1 = PyObject_GetAttr(__pyx_t_2, __pyx_n_s__y); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 16; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_4 = __Pyx_PyInt_AsInt(__pyx_t_1); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 16; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  startFrame(__pyx_t_3, __pyx_t_4);
 
   __pyx_r = Py_None; __Pyx_INCREF(Py_None);
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("panda3d.framePreContext", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_AddTraceback("opengl.framePreContext", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -489,30 +496,30 @@ static PyObject *__pyx_pf_7panda3d_framePreContext(PyObject *__pyx_self, PyObjec
   return __pyx_r;
 }
 
-/* "panda3d.pyx":21
+/* "opengl.pyx":19
  * 
  * 
- * def initializeSystem():             # <<<<<<<<<<<<<<
- *     initializePanda3DSystem()
+ * def framePostContext(context):             # <<<<<<<<<<<<<<
+ *     endFrame()
  * 
  */
 
-static PyObject *__pyx_pf_7panda3d_1initializeSystem(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyMethodDef __pyx_mdef_7panda3d_1initializeSystem = {__Pyx_NAMESTR("initializeSystem"), (PyCFunction)__pyx_pf_7panda3d_1initializeSystem, METH_NOARGS, __Pyx_DOCSTR(0)};
-static PyObject *__pyx_pf_7panda3d_1initializeSystem(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pf_6opengl_1framePostContext(PyObject *__pyx_self, PyObject *__pyx_v_context); /*proto*/
+static PyMethodDef __pyx_mdef_6opengl_1framePostContext = {__Pyx_NAMESTR("framePostContext"), (PyCFunction)__pyx_pf_6opengl_1framePostContext, METH_O, __Pyx_DOCSTR(0)};
+static PyObject *__pyx_pf_6opengl_1framePostContext(PyObject *__pyx_self, PyObject *__pyx_v_context) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("initializeSystem");
+  __Pyx_RefNannySetupContext("framePostContext");
   __pyx_self = __pyx_self;
 
-  /* "panda3d.pyx":22
+  /* "opengl.pyx":20
  * 
- * def initializeSystem():
- *     initializePanda3DSystem()             # <<<<<<<<<<<<<<
+ * def framePostContext(context):
+ *     endFrame()             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  initializePanda3DSystem();
+  endFrame();
 
   __pyx_r = Py_None; __Pyx_INCREF(Py_None);
   __Pyx_XGIVEREF(__pyx_r);
@@ -520,92 +527,89 @@ static PyObject *__pyx_pf_7panda3d_1initializeSystem(PyObject *__pyx_self, CYTHO
   return __pyx_r;
 }
 
-/* "panda3d.pyx":25
+/* "opengl.pyx":23
  * 
  * 
- * def initializeInput(mouseWatcher):             # <<<<<<<<<<<<<<
- *     createInputHandler(mouseWatcher)
- *     if framePreContext not in pyrokit.manager.framePreContextCallbacks:
+ * def initializeRenderer():             # <<<<<<<<<<<<<<
+ *     initializeOpenGLRenderer()
+ *     pyrokit.manager.addFramePreContextCallback(framePreContext)
  */
 
-static PyObject *__pyx_pf_7panda3d_2initializeInput(PyObject *__pyx_self, PyObject *__pyx_v_mouseWatcher); /*proto*/
-static PyMethodDef __pyx_mdef_7panda3d_2initializeInput = {__Pyx_NAMESTR("initializeInput"), (PyCFunction)__pyx_pf_7panda3d_2initializeInput, METH_O, __Pyx_DOCSTR(0)};
-static PyObject *__pyx_pf_7panda3d_2initializeInput(PyObject *__pyx_self, PyObject *__pyx_v_mouseWatcher) {
+static PyObject *__pyx_pf_6opengl_2initializeRenderer(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyMethodDef __pyx_mdef_6opengl_2initializeRenderer = {__Pyx_NAMESTR("initializeRenderer"), (PyCFunction)__pyx_pf_6opengl_2initializeRenderer, METH_NOARGS, __Pyx_DOCSTR(0)};
+static PyObject *__pyx_pf_6opengl_2initializeRenderer(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
   PyObject *__pyx_t_3 = NULL;
-  int __pyx_t_4;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("initializeInput");
+  __Pyx_RefNannySetupContext("initializeRenderer");
   __pyx_self = __pyx_self;
 
-  /* "panda3d.pyx":26
+  /* "opengl.pyx":24
  * 
- * def initializeInput(mouseWatcher):
- *     createInputHandler(mouseWatcher)             # <<<<<<<<<<<<<<
- *     if framePreContext not in pyrokit.manager.framePreContextCallbacks:
- *         pyrokit.manager.addFramePreContextCallback(framePreContext)
+ * def initializeRenderer():
+ *     initializeOpenGLRenderer()             # <<<<<<<<<<<<<<
+ *     pyrokit.manager.addFramePreContextCallback(framePreContext)
+ *     pyrokit.manager.addFramePostContextCallback(framePostContext)
  */
-  __pyx_t_1 = __pyx_f_7panda3d_createInputHandler(__pyx_v_mouseWatcher); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 26; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  initializeOpenGLRenderer();
 
-  /* "panda3d.pyx":27
- * def initializeInput(mouseWatcher):
- *     createInputHandler(mouseWatcher)
- *     if framePreContext not in pyrokit.manager.framePreContextCallbacks:             # <<<<<<<<<<<<<<
- *         pyrokit.manager.addFramePreContextCallback(framePreContext)
- * 
+  /* "opengl.pyx":25
+ * def initializeRenderer():
+ *     initializeOpenGLRenderer()
+ *     pyrokit.manager.addFramePreContextCallback(framePreContext)             # <<<<<<<<<<<<<<
+ *     pyrokit.manager.addFramePostContextCallback(framePostContext)
  */
-  __pyx_t_1 = __Pyx_GetName(__pyx_m, __pyx_n_s__framePreContext); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 27; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_GetName(__pyx_m, __pyx_n_s__pyrokit); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 25; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_GetName(__pyx_m, __pyx_n_s__pyrokit); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 27; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyObject_GetAttr(__pyx_t_1, __pyx_n_s__manager); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 25; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyObject_GetAttr(__pyx_t_2, __pyx_n_s__manager); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 27; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = PyObject_GetAttr(__pyx_t_2, __pyx_n_s_1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 25; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_GetName(__pyx_m, __pyx_n_s__framePreContext); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 25; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 25; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(((PyObject *)__pyx_t_3));
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_2);
+  __pyx_t_2 = 0;
+  __pyx_t_2 = PyObject_Call(__pyx_t_1, ((PyObject *)__pyx_t_3), NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 25; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(((PyObject *)__pyx_t_3)); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "opengl.pyx":26
+ *     initializeOpenGLRenderer()
+ *     pyrokit.manager.addFramePreContextCallback(framePreContext)
+ *     pyrokit.manager.addFramePostContextCallback(framePostContext)             # <<<<<<<<<<<<<<
+ */
+  __pyx_t_2 = __Pyx_GetName(__pyx_m, __pyx_n_s__pyrokit); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 26; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = PyObject_GetAttr(__pyx_t_2, __pyx_n_s__manager); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 26; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyObject_GetAttr(__pyx_t_3, __pyx_n_s_1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 27; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyObject_GetAttr(__pyx_t_3, __pyx_n_s_2); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 26; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_4 = (__Pyx_NegateNonNeg(PySequence_Contains(__pyx_t_2, __pyx_t_1))); if (unlikely(__pyx_t_4 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 27; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_3 = __Pyx_GetName(__pyx_m, __pyx_n_s__framePostContext); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 26; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 26; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(((PyObject *)__pyx_t_1));
+  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_3);
+  __pyx_t_3 = 0;
+  __pyx_t_3 = PyObject_Call(__pyx_t_2, ((PyObject *)__pyx_t_1), NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 26; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (__pyx_t_4) {
-
-    /* "panda3d.pyx":28
- *     createInputHandler(mouseWatcher)
- *     if framePreContext not in pyrokit.manager.framePreContextCallbacks:
- *         pyrokit.manager.addFramePreContextCallback(framePreContext)             # <<<<<<<<<<<<<<
- * 
- * 
- */
-    __pyx_t_2 = __Pyx_GetName(__pyx_m, __pyx_n_s__pyrokit); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 28; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_1 = PyObject_GetAttr(__pyx_t_2, __pyx_n_s__manager); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 28; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = PyObject_GetAttr(__pyx_t_1, __pyx_n_s_2); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 28; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(__pyx_t_2);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = __Pyx_GetName(__pyx_m, __pyx_n_s__framePreContext); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 28; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 28; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(((PyObject *)__pyx_t_3));
-    PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_1);
-    __pyx_t_1 = 0;
-    __pyx_t_1 = PyObject_Call(__pyx_t_2, ((PyObject *)__pyx_t_3), NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 28; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_DECREF(((PyObject *)__pyx_t_3)); __pyx_t_3 = 0;
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    goto __pyx_L5;
-  }
-  __pyx_L5:;
+  __Pyx_DECREF(((PyObject *)__pyx_t_1)); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
   __pyx_r = Py_None; __Pyx_INCREF(Py_None);
   goto __pyx_L0;
@@ -613,48 +617,8 @@ static PyObject *__pyx_pf_7panda3d_2initializeInput(PyObject *__pyx_self, PyObje
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("panda3d.initializeInput", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("opengl.initializeRenderer", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "panda3d.pyx":31
- * 
- * 
- * cdef createInputHandler(node):             # <<<<<<<<<<<<<<
- *     createRocketInputHandler(<NodePath*> <long> node.this)
- */
-
-static PyObject *__pyx_f_7panda3d_createInputHandler(PyObject *__pyx_v_node) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  long __pyx_t_2;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("createInputHandler");
-
-  /* "panda3d.pyx":32
- * 
- * cdef createInputHandler(node):
- *     createRocketInputHandler(<NodePath*> <long> node.this)             # <<<<<<<<<<<<<<
- */
-  __pyx_t_1 = PyObject_GetAttr(__pyx_v_node, __pyx_n_s__this); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 32; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyInt_AsLong(__pyx_t_1); if (unlikely((__pyx_t_2 == (long)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 32; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  createRocketInputHandler(((NodePath *)((long)__pyx_t_2)));
-
-  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("panda3d.createInputHandler", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
@@ -668,7 +632,7 @@ static PyMethodDef __pyx_methods[] = {
 #if PY_MAJOR_VERSION >= 3
 static struct PyModuleDef __pyx_moduledef = {
     PyModuleDef_HEAD_INIT,
-    __Pyx_NAMESTR("panda3d"),
+    __Pyx_NAMESTR("opengl"),
     __Pyx_DOCSTR(__pyx_k_3), /* m_doc */
     -1, /* m_size */
     __pyx_methods /* m_methods */,
@@ -684,14 +648,15 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_2, __pyx_k_2, sizeof(__pyx_k_2), 0, 0, 1, 1},
   {&__pyx_n_s____main__, __pyx_k____main__, sizeof(__pyx_k____main__), 0, 0, 1, 1},
   {&__pyx_n_s____test__, __pyx_k____test__, sizeof(__pyx_k____test__), 0, 0, 1, 1},
+  {&__pyx_n_s__dimensions, __pyx_k__dimensions, sizeof(__pyx_k__dimensions), 0, 0, 1, 1},
+  {&__pyx_n_s__framePostContext, __pyx_k__framePostContext, sizeof(__pyx_k__framePostContext), 0, 0, 1, 1},
   {&__pyx_n_s__framePreContext, __pyx_k__framePreContext, sizeof(__pyx_k__framePreContext), 0, 0, 1, 1},
-  {&__pyx_n_s__initializeInput, __pyx_k__initializeInput, sizeof(__pyx_k__initializeInput), 0, 0, 1, 1},
-  {&__pyx_n_s__initializeSystem, __pyx_k__initializeSystem, sizeof(__pyx_k__initializeSystem), 0, 0, 1, 1},
+  {&__pyx_n_s__initializeRenderer, __pyx_k__initializeRenderer, sizeof(__pyx_k__initializeRenderer), 0, 0, 1, 1},
   {&__pyx_n_s__manager, __pyx_k__manager, sizeof(__pyx_k__manager), 0, 0, 1, 1},
-  {&__pyx_n_s__name, __pyx_k__name, sizeof(__pyx_k__name), 0, 0, 1, 1},
-  {&__pyx_n_s__panda3d, __pyx_k__panda3d, sizeof(__pyx_k__panda3d), 0, 0, 1, 1},
+  {&__pyx_n_s__opengl, __pyx_k__opengl, sizeof(__pyx_k__opengl), 0, 0, 1, 1},
   {&__pyx_n_s__pyrokit, __pyx_k__pyrokit, sizeof(__pyx_k__pyrokit), 0, 0, 1, 1},
-  {&__pyx_n_s__this, __pyx_k__this, sizeof(__pyx_k__this), 0, 0, 1, 1},
+  {&__pyx_n_s__x, __pyx_k__x, sizeof(__pyx_k__x), 0, 0, 1, 1},
+  {&__pyx_n_s__y, __pyx_k__y, sizeof(__pyx_k__y), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
@@ -713,11 +678,11 @@ static int __Pyx_InitGlobals(void) {
 }
 
 #if PY_MAJOR_VERSION < 3
-PyMODINIT_FUNC initpanda3d(void); /*proto*/
-PyMODINIT_FUNC initpanda3d(void)
+PyMODINIT_FUNC initopengl(void); /*proto*/
+PyMODINIT_FUNC initopengl(void)
 #else
-PyMODINIT_FUNC PyInit_panda3d(void); /*proto*/
-PyMODINIT_FUNC PyInit_panda3d(void)
+PyMODINIT_FUNC PyInit_opengl(void); /*proto*/
+PyMODINIT_FUNC PyInit_opengl(void)
 #endif
 {
   PyObject *__pyx_t_1 = NULL;
@@ -731,7 +696,7 @@ PyMODINIT_FUNC PyInit_panda3d(void)
           Py_FatalError("failed to import 'refnanny' module");
   }
   #endif
-  __Pyx_RefNannySetupContext("PyMODINIT_FUNC PyInit_panda3d(void)");
+  __Pyx_RefNannySetupContext("PyMODINIT_FUNC PyInit_opengl(void)");
   if ( __Pyx_check_binary_version() < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_empty_tuple = PyTuple_New(0); if (unlikely(!__pyx_empty_tuple)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_empty_bytes = PyBytes_FromStringAndSize("", 0); if (unlikely(!__pyx_empty_bytes)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
@@ -747,7 +712,7 @@ PyMODINIT_FUNC PyInit_panda3d(void)
   #endif
   /*--- Module creation code ---*/
   #if PY_MAJOR_VERSION < 3
-  __pyx_m = Py_InitModule4(__Pyx_NAMESTR("panda3d"), __pyx_methods, __Pyx_DOCSTR(__pyx_k_3), 0, PYTHON_API_VERSION);
+  __pyx_m = Py_InitModule4(__Pyx_NAMESTR("opengl"), __pyx_methods, __Pyx_DOCSTR(__pyx_k_3), 0, PYTHON_API_VERSION);
   #else
   __pyx_m = PyModule_Create(&__pyx_moduledef);
   #endif
@@ -760,7 +725,7 @@ PyMODINIT_FUNC PyInit_panda3d(void)
   if (__Pyx_SetAttrString(__pyx_m, "__builtins__", __pyx_b) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   /*--- Initialize various global constants etc. ---*/
   if (unlikely(__Pyx_InitGlobals() < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (__pyx_module_is_main_panda3d) {
+  if (__pyx_module_is_main_opengl) {
     if (__Pyx_SetAttrString(__pyx_m, "__name__", __pyx_n_s____main__) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   }
   /*--- Builtin init code ---*/
@@ -776,7 +741,7 @@ PyMODINIT_FUNC PyInit_panda3d(void)
   /*--- Function import code ---*/
   /*--- Execution code ---*/
 
-  /* "panda3d.pyx":4
+  /* "opengl.pyx":4
  * 
  * """
  * import pyrokit             # <<<<<<<<<<<<<<
@@ -788,44 +753,44 @@ PyMODINIT_FUNC PyInit_panda3d(void)
   if (PyObject_SetAttr(__pyx_m, __pyx_n_s__pyrokit, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 4; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "panda3d.pyx":17
+  /* "opengl.pyx":15
  * 
  * 
  * def framePreContext(context):             # <<<<<<<<<<<<<<
- *     updateContext(context.name)
+ *     startFrame(context.dimensions.x, context.dimensions.y)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_7panda3d_framePreContext, NULL, __pyx_n_s__panda3d); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 17; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6opengl_framePreContext, NULL, __pyx_n_s__opengl); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 15; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s__framePreContext, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 17; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s__framePreContext, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 15; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "panda3d.pyx":21
+  /* "opengl.pyx":19
  * 
  * 
- * def initializeSystem():             # <<<<<<<<<<<<<<
- *     initializePanda3DSystem()
+ * def framePostContext(context):             # <<<<<<<<<<<<<<
+ *     endFrame()
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_7panda3d_1initializeSystem, NULL, __pyx_n_s__panda3d); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 21; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6opengl_1framePostContext, NULL, __pyx_n_s__opengl); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 19; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s__initializeSystem, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 21; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s__framePostContext, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 19; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "panda3d.pyx":25
+  /* "opengl.pyx":23
  * 
  * 
- * def initializeInput(mouseWatcher):             # <<<<<<<<<<<<<<
- *     createInputHandler(mouseWatcher)
- *     if framePreContext not in pyrokit.manager.framePreContextCallbacks:
+ * def initializeRenderer():             # <<<<<<<<<<<<<<
+ *     initializeOpenGLRenderer()
+ *     pyrokit.manager.addFramePreContextCallback(framePreContext)
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_7panda3d_2initializeInput, NULL, __pyx_n_s__panda3d); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 25; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6opengl_2initializeRenderer, NULL, __pyx_n_s__opengl); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 23; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s__initializeInput, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 25; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s__initializeRenderer, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 23; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "panda3d.pyx":1
- * """Initialize Panda3D integration.             # <<<<<<<<<<<<<<
+  /* "opengl.pyx":1
+ * """Initialize the OpenGL render interface.             # <<<<<<<<<<<<<<
  * 
  * """
  */
@@ -837,10 +802,10 @@ PyMODINIT_FUNC PyInit_panda3d(void)
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   if (__pyx_m) {
-    __Pyx_AddTraceback("init panda3d", __pyx_clineno, __pyx_lineno, __pyx_filename);
+    __Pyx_AddTraceback("init opengl", __pyx_clineno, __pyx_lineno, __pyx_filename);
     Py_DECREF(__pyx_m); __pyx_m = 0;
   } else if (!PyErr_Occurred()) {
-    PyErr_SetString(PyExc_ImportError, "init panda3d");
+    PyErr_SetString(PyExc_ImportError, "init opengl");
   }
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
