@@ -266,5 +266,5 @@ update_context(Rocket::Core::Context *context, int xoffs, int yoffs) {
   //printf("   About to call context->Update()..\n");
   //fflush(stdout);
 
-  context->Update();
+  //context->Update();
 }

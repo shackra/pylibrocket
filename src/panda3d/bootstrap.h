@@ -1,21 +1,19 @@
-#ifndef __PYROKIT_BOOTSTRAP_H__
-#define __PYROKIT_BOOTSTRAP_H__
+#ifndef __PYROKIT_PANDA3D_BOOTSTRAP_H__
+#define __PYROKIT_PANDA3D_BOOTSTRAP_H__
 
 
 struct Panda3DSystemInterface;
-struct ShellRenderInterfaceOpenGL;
 struct RocketInputHandler;
 struct NodePath;
 
 
 extern Panda3DSystemInterface* panda3dSystem;
-extern ShellRenderInterfaceOpenGL* openglRenderer;
 extern RocketInputHandler* inputHandler;
 
 
-void bootstrap();
+void initializePanda3DSystem();
 void createRocketInputHandler(NodePath* parent);
 void updateContext(char* contextName);
 
 
-#endif // __PYROKIT_BOOTSTRAP_H__
+#endif // __PYROKIT_PANDA3D_BOOTSTRAP_H__

@@ -7,29 +7,19 @@
 #include "pandaSystem.h"
 #include "mouseAndKeyboard.h"
 
-#include "ShellRenderInterfaceOpenGL.h"
 #include "Panda3DSystemInterface.h"
 #include "rocketInputHandler.h"
 #include "bootstrap.h"
 
 
 Panda3DSystemInterface* panda3dSystem = NULL;
-ShellRenderInterfaceOpenGL* openglRenderer = NULL;
 RocketInputHandler* inputHandler = NULL;
 
-void bootstrap()
+void initializePanda3DSystem()
 {
-    //LibRocket Setup Step 1 => System Interface
     panda3dSystem = new Panda3DSystemInterface;
     Rocket::Core::SetSystemInterface(panda3dSystem);
-
-    //LibRocket Setup Step 2 => Render Interface
-    openglRenderer = new ShellRenderInterfaceOpenGL;
-	Rocket::Core::SetRenderInterface(openglRenderer);
-
-    //LibRocket Setup Step 3 => Initialize
-    Rocket::Core::Initialise();
-} // end bootstrap
+} // end initializePanda3DSystem
 
 void createRocketInputHandler(NodePath* parent)
 {
@@ -40,7 +30,7 @@ void createRocketInputHandler(NodePath* parent)
 
 void updateContext(char* contextName)
 {
-	if (inputHandler != NULL)
+	if(inputHandler != NULL)
 	{
 		//TODO: Figure out what these values should be.
 		int xoffs = 0;
@@ -50,7 +40,7 @@ void updateContext(char* contextName)
 		Rocket::Core::StringBase<char> name = Rocket::Core::StringBase<char>(contextName);
 		Rocket::Core::Context* context = Rocket::Core::GetContext(name);
 
-		if (context == NULL)
+		if(context == NULL)
 		{
 			printf("*** Context \"%s\" is null!\n", contextName);
 			fflush(stdout);
@@ -59,4 +49,4 @@ void updateContext(char* contextName)
 		// Update the context
 		inputHandler->update_context(context, xoffs, yoffs);
 	} // end if
-} // end updateContext()
+} // end updateContext
