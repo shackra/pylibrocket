@@ -1,3 +1,5 @@
+import rocket_init
+
 import rocket
 
 
@@ -27,6 +29,9 @@ class _PyrokitManager(object):
 
     def hideContext(self, context):
         self.invisibleContexts.add(context)
+
+    def finishInitialization(self):
+        rocket_init.initialize()
 
     def render(self, data):
         activeContexts = set(rocket.contexts) - self.invisibleContexts
