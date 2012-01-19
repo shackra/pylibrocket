@@ -16,8 +16,6 @@
 #include "panda3d/buttonEventList.h"
 #include "panda3d/dataGraphTraverser.h"
 #include "panda3d/linmath_events.h"
-//#include "rocketRenderInterface.h"
-#include "ShellRenderInterfaceOpenGL.h"
 #include "panda3d/keyboardButton.h"
 #include "panda3d/mouseButton.h"
 
