@@ -11,6 +11,8 @@
 #include "rocketInputHandler.h"
 #include "bootstrap.h"
 
+#include <iostream>
+
 
 Panda3DSystemInterface* panda3dSystem = NULL;
 RocketInputHandler* inputHandler = NULL;
@@ -23,9 +25,15 @@ void initializePanda3DSystem()
 
 void createRocketInputHandler(NodePath* parent)
 {
+	// Init our RocketInputHandler type
+	RocketInputHandler::init_type();
+
 	// Create our input handler datanode
-	inputHandler = new RocketInputHandler("Pyrokit Input Handler");
+	inputHandler = new RocketInputHandler("PyrokitInputHandler");
+
+	// Attach the inputhandler to the parent.
 	parent->attach_new_node(inputHandler);
+
 } // end createRocketInputHandler
 
 void updateContext(char* contextName)
