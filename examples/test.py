@@ -37,6 +37,11 @@ class MyApp(ShowBase):
         print
 
         os.chdir(os.path.dirname(__file__))
+        rocket.LoadFontFace("data/Delicious-Roman.otf")
+        rocket.LoadFontFace("data/Delicious-Bold.otf")
+        rocket.LoadFontFace("data/Delicious-BoldItalic.otf")
+        rocket.LoadFontFace("data/Delicious-Italic.otf")
+
         self.rocketContext.LoadDocument('data/demo.rml').Show()
 
         rocketCB = PythonCallbackObject(pyrokit.manager.render)
