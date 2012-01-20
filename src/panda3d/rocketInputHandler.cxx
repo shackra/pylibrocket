@@ -244,7 +244,153 @@ void RocketInputHandler::do_transmit_data(DataGraphTraverser *trav, const DataNo
 				}
 				else if (be._button == KeyboardButton::del())
 				{
-				  _keys[KI_DELETE] = down;
+					_keys[KI_DELETE] = down;
+				}
+				else if (be._button == KeyboardButton::caps_lock())
+				{
+					_keys[KI_CAPITAL] = down;
+				}
+				else if (be._button == KeyboardButton::f1())
+				{
+					_keys[KI_F1] = down;
+				}
+				else if (be._button == KeyboardButton::f10())
+				{
+					_keys[KI_F10] = down;
+				}
+				else if (be._button == KeyboardButton::f11())
+				{
+					_keys[KI_F11] = down;
+				}
+				else if (be._button == KeyboardButton::f12())
+				{
+					_keys[KI_F12] = down;
+				}
+				else if (be._button == KeyboardButton::f13())
+				{
+					_keys[KI_F13] = down;
+				}
+				else if (be._button == KeyboardButton::f14())
+				{
+					_keys[KI_F14] = down;
+				}
+				else if (be._button == KeyboardButton::f15())
+				{
+					_keys[KI_F15] = down;
+				}
+				else if (be._button == KeyboardButton::f16())
+				{
+					_keys[KI_F16] = down;
+				}
+				else if (be._button == KeyboardButton::f2())
+				{
+					_keys[KI_F2] = down;
+				}
+				else if (be._button == KeyboardButton::f3())
+			   	{
+					_keys[KI_F3] = down;
+				}
+				else if (be._button == KeyboardButton::f4())
+				{
+					_keys[KI_F4] = down;
+				}
+				else if (be._button == KeyboardButton::f5())
+			   	{
+					_keys[KI_F5] = down;
+				}
+				else if (be._button == KeyboardButton::f6())
+				{
+					_keys[KI_F6] = down;
+				}
+				else if (be._button == KeyboardButton::f7())
+				{
+					_keys[KI_F7] = down;
+				}
+				else if (be._button == KeyboardButton::f8())
+				{
+					_keys[KI_F8] = down;
+				}
+				else if (be._button == KeyboardButton::f9())
+				{
+					_keys[KI_F9] = down;
+				}
+				else if (be._button == KeyboardButton::help())
+				{
+					_keys[KI_HELP] = down;
+				}
+				else if (be._button == KeyboardButton::lalt())
+				{
+					_keys[KI_LMENU] = down;
+				}
+				else if (be._button == KeyboardButton::lcontrol())
+				{
+					_keys[KI_LCONTROL] = down;
+				}
+				else if (be._button == KeyboardButton::lshift())
+				{
+					_keys[KI_LSHIFT] = down;
+				}
+				else if (be._button == KeyboardButton::meta())
+			   	{
+					// Not sure which of these is correct...
+					//_keys[KI_LWIN] = down;
+					_keys[KI_LMETA] = down;
+				}
+				else if (be._button == KeyboardButton::num_lock())
+			   	{
+					_keys[KI_NUMLOCK] = down;
+				}
+				else if (be._button == KeyboardButton::page_down())
+			   	{
+					_keys[KI_NEXT] = down;
+				}
+				else if (be._button == KeyboardButton::page_up())
+			   	{
+					_keys[KI_PRIOR] = down;
+				}
+				else if (be._button == KeyboardButton::pause())
+			   	{
+					_keys[KI_PAUSE] = down;
+				}
+				else if (be._button == KeyboardButton::print_screen())
+			   	{
+					_keys[KI_SNAPSHOT] = down;
+				}
+				else if (be._button == KeyboardButton::ralt())
+				{
+					_keys[KI_RMENU] = down;
+				}
+				else if (be._button == KeyboardButton::rcontrol())
+				{
+					_keys[KI_RCONTROL] = down;
+				}
+				else if (be._button == KeyboardButton::rshift())
+				{
+					_keys[KI_RSHIFT] = down;
+				}
+				else if (be._button == KeyboardButton::scroll_lock())
+				{
+					_keys[KI_SCROLL] = down;
+				/* What is shift_lock? It's not caps_lock apparently...
+
+				}
+				else if (be._button == KeyboardButton::shift_lock())
+				{
+					_keys[KI_SHIFT_LOCK] = down;
+				*/
+				}
+				else
+				{
+					char asciiChar = be._button.get_ascii_equivalent();
+
+					if ('0' <= asciiChar && asciiChar <= '9')
+					{
+						_keys[asciiChar - '0' + KI_0] = down;
+					}
+					else if ('a' <= asciiChar && asciiChar <= 'z')
+					{
+						_keys[asciiChar - 'a' + KI_A] = down;
+					} // end if
 				} // end if
 			} // end if
 		} // end for
@@ -305,12 +451,10 @@ void RocketInputHandler::update_context(Rocket::Core::Context *context, int xoff
 		{
 			if (it->second)
 			{
-				fprintf(stdout, "Sending button down for button %d.\n", it->first);
 				context->ProcessKeyDown((KeyIdentifier) it->first, _modifiers);
 			}
 			else
 			{
-				fprintf(stdout, "Sending button up for button %d.\n", it->first);
 				context->ProcessKeyUp((KeyIdentifier) it->first, _modifiers);
 			} // end if
 		} // end for
