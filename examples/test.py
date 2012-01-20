@@ -24,6 +24,7 @@ class MyApp(ShowBase):
         self.loadModels()
 
         pyrokit.opengl.initializeRenderer()
+        #pyrokit.panda3d.initializeRenderer() # Segfaults!
         pyrokit.panda3d.initializeSystem()
         pyrokit.panda3d.initializeInput(self.mouseWatcher)
         pyrokit.manager.finishInitialization()

@@ -135,6 +135,7 @@ def genExt_pyrokit_panda3d(setupKwargs):
                     'src/panda3d/panda3d.pyx',
                     ],
                 [
+                    'src/panda3d/rocketRenderInterface.cxx',
                     'src/panda3d/rocketInputHandler.cxx',
                     'src/panda3d/Panda3DSystemInterface.cpp',
                     'src/panda3d/bootstrap.cpp',
