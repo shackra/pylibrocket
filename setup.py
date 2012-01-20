@@ -168,6 +168,31 @@ def genExt_pyrokit_panda3d(setupKwargs):
             )
 
 
+def genExt_pyrokit_sfml(setupKwargs):
+    setupKwargs.setdefault('ext_modules', []).append(
+            genCythonExtension(
+                'pyrokit.sfml',
+                [
+                    'src/sfml/sfml.pyx',
+                    ],
+                [
+                    'src/sfml/RenderInterfaceSFML.cpp',
+                    'src/sfml/SystemInterfaceSFML.cpp',
+                    ],
+                language='c++',
+                include_dirs=[
+                    'src',
+                    ],
+                libraries=[
+                    'RocketCore',
+                    'sfml-graphics',
+                    'sfml-window',
+                    'sfml-system',
+                    ],
+                )
+            )
+
+
 setupKwargs = dict(
         name='pyrokit',
         version=version,
@@ -180,8 +205,9 @@ setupKwargs = dict(
 
 # Add enabled extensions
 genExt_pyrokit(setupKwargs)
-genExt_pyrokit_panda3d(setupKwargs)
 genExt_pyrokit_opengl(setupKwargs)
+genExt_pyrokit_panda3d(setupKwargs)
+genExt_pyrokit_sfml(setupKwargs)
 
 if generateCode and 'ext_modules' in setupKwargs:
     setupKwargs['ext_modules'] = cythonize(setupKwargs['ext_modules'])
