@@ -260,13 +260,7 @@ void RocketInputHandler::do_transmit_data(DataGraphTraverser *trav, const DataNo
 ////////////////////////////////////////////////////////////////////
 void RocketInputHandler::update_context(Rocket::Core::Context *context, int xoffs, int yoffs)
 {
-	//printf("update_context called.\n");
-	//fflush(stdout);
-
 	MutexHolder holder(_lock);
-
-	//printf("   Mouse...\n");
-	//fflush(stdout);
 
 	if (_mouse_xy_changed)
 	{
@@ -283,34 +277,25 @@ void RocketInputHandler::update_context(Rocket::Core::Context *context, int xoff
 		ButtonActivityMap::const_iterator it;
 		for (it = _mouse_buttons.begin(); it != _mouse_buttons.end(); ++it)
 		{
+			// it->second is a boolean; so this is 'if button is pressed...'
 			if (it->second)
 			{
-				printf("ButtonDown...\n");
-				fflush(stdout);
-				context->ProcessMouseButtonDown(it->first, _modifiers);
+				context->ProcessMouseButtonDown(it->first - 1, _modifiers);
 			}
 			else
 			{
-				printf("ButtonUp...\n");
-				fflush(stdout);
-				context->ProcessMouseButtonUp(it->first, _modifiers);
+				context->ProcessMouseButtonUp(it->first - 1, _modifiers);
 			} // end if
 		} // end for
 
 		_mouse_buttons.clear();
 	} // end if
 
-	//printf("   MouseWheel...\n");
-	//fflush(stdout);
-
 	if (_wheel_delta != 0)
 	{
 		context->ProcessMouseWheel(_wheel_delta, _modifiers);
 		_wheel_delta = 0;
 	} // end if
-
-	//printf("   Keys...\n");
-	//fflush(stdout);
 
 	if (_keys.size() > 0)
 	{
@@ -320,34 +305,31 @@ void RocketInputHandler::update_context(Rocket::Core::Context *context, int xoff
 		{
 			if (it->second)
 			{
+				fprintf(stdout, "Sending button down for button %d.\n", it->first);
 				context->ProcessKeyDown((KeyIdentifier) it->first, _modifiers);
 			}
 			else
 			{
+				fprintf(stdout, "Sending button up for button %d.\n", it->first);
 				context->ProcessKeyUp((KeyIdentifier) it->first, _modifiers);
 			} // end if
 		} // end for
 
-		_mouse_buttons.clear();
+		_keys.clear();
 	} // end if
-
-	//printf("   Text Input...\n");
-	//fflush(stdout);
 
 	if (_text_input.size() > 0)
 	{
 		pvector<short>::const_iterator it;
 		for (it = _text_input.begin(); it != _text_input.end(); ++it)
 		{
+			fprintf(stdout, "Sending text %d.\n", *it);
 			context->ProcessTextInput(*it);
 		} // end for
 
 		_text_input.clear();
 	} // end if
 
-	//printf("   About to call context->Update()..\n");
-	//fflush(stdout);
-
 	// Removed; this will be called explicitly outside of the input handler.
 	//context->Update();
-}
+} // end update_context
