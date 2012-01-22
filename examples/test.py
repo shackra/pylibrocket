@@ -1,4 +1,5 @@
 import os
+import sys
 from math import pi, sin, cos
 
 from direct.showbase.ShowBase import ShowBase
@@ -43,7 +44,8 @@ class MyApp(ShowBase):
         rocket.LoadFontFace("data/Delicious-BoldItalic.otf")
         rocket.LoadFontFace("data/Delicious-Italic.otf")
 
-        self.rocketContext.LoadDocument('data/demo.rml').Show()
+        document = self.rocketContext.LoadDocument('data/demo.rml')
+        document.Show()
 
         rocketCB = PythonCallbackObject(pyrokit.manager.render)
         self.cbNode = CallbackNode("Rocket")
@@ -51,6 +53,9 @@ class MyApp(ShowBase):
         self.render2d.attachNewNode(self.cbNode)
 
         base.accept('window-event', self.windowEvent)
+
+        quitButton = document.GetElementById('quit')
+        quitButton.AddEventListener('click', self.onQuit, True)
 
     def loadModels(self):
         # Load the environment model.
@@ -96,7 +101,14 @@ class MyApp(ShowBase):
         return Task.cont
 
     def windowEvent(self, window):
+        if window.isClosed():
+            self.onQuit()
+
         self.rocketContext.dimensions = rocket.Vector2i(window.getXSize(), window.getYSize())
+
+    def onQuit(self):
+        sys.exit()
+
 
 
 app = MyApp()
