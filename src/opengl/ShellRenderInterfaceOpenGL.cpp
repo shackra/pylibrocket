@@ -33,6 +33,9 @@
 
 void startFrame(int viewportWidth, int viewportHeight)
 {
+	viewportWidth = viewportWidth;
+	viewportHeight = viewportHeight;
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
 
@@ -121,7 +124,7 @@ void ShellRenderInterfaceOpenGL::EnableScissorRegion(bool enable)
 // Called by Rocket when it wants to change the scissor region.
 void ShellRenderInterfaceOpenGL::SetScissorRegion(int x, int y, int width, int height)
 {
-	glScissor(x, 768 - (y + height), width, height);
+	glScissor(x, viewportHeight - (y + height), width, height);
 }
 
 // Set to byte packing, or the compiler will expand our struct, which means it won't read correctly from file

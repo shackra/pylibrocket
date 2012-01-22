@@ -67,6 +67,11 @@ public:
 	virtual bool GenerateTexture(Rocket::Core::TextureHandle& texture_handle, const Rocket::Core::byte* source, const Rocket::Core::Vector2i& source_dimensions);
 	/// Called by Rocket when a loaded texture is no longer required.
 	virtual void ReleaseTexture(Rocket::Core::TextureHandle texture_handle);
+
+private:
+
+	int viewportWidth;
+	int viewportHeight;
 };
 
 #endif
