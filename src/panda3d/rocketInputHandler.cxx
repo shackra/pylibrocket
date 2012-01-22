@@ -127,6 +127,31 @@ void RocketInputHandler::do_transmit_data(DataGraphTraverser *trav, const DataNo
 
 				case ButtonEvent::T_repeat:
 				{
+					if (be._button == KeyboardButton::backspace())
+					{
+						_repeated_keys[KI_BACK] = true;
+					}
+					else if (be._button == KeyboardButton::del())
+					{
+						_repeated_keys[KI_DELETE] = true;
+					}
+					else if (be._button == KeyboardButton::left())
+					{
+						_repeated_keys[KI_LEFT] = true;
+					}
+					else if (be._button == KeyboardButton::up())
+					{
+						_repeated_keys[KI_UP] = true;
+					}
+					else if (be._button == KeyboardButton::right())
+					{
+						_repeated_keys[KI_RIGHT] = true;
+					}
+					else if (be._button == KeyboardButton::down())
+					{
+						_repeated_keys[KI_DOWN] = true;
+					} // end if
+
 					break;
 				} // end case
 
@@ -464,6 +489,19 @@ void RocketInputHandler::update_context(Rocket::Core::Context *context, int xoff
 		} // end for
 
 		_keys.clear();
+	} // end if
+
+	if (_repeated_keys.size() > 0)
+	{
+		ButtonActivityMap::const_iterator it;
+
+		for (it = _repeated_keys.begin(); it != _repeated_keys.end(); ++it)
+		{
+			context->ProcessKeyUp((KeyIdentifier) it->first, _modifiers);
+			context->ProcessKeyDown((KeyIdentifier) it->first, _modifiers);
+		} // end for
+
+		_repeated_keys.clear();
 	} // end if
 
 	if (_text_input.size() > 0)

@@ -56,6 +56,7 @@ class EXPCL_ROCKET RocketInputHandler : public DataNode
 	  typedef pmap<int, bool> ButtonActivityMap;
 	  ButtonActivityMap _mouse_buttons;
 	  ButtonActivityMap _keys;
+	  ButtonActivityMap _repeated_keys;
 	  pvector<short> _text_input;
 
 	public:
