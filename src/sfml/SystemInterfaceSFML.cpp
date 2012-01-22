@@ -27,7 +27,7 @@
 #include <Rocket/Core.h>
 #include "SystemInterfaceSFML.h"
 
-int RocketSFMLSystemInterface::GetKeyModifiers(sf::Window *Window)
+int RocketSFMLSystemInterface::GetKeyModifiers()
 {
 	int Modifiers = 0;
 

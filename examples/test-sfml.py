@@ -1,7 +1,12 @@
+import os
+
 import sf
 
 import pyrokit
 import pyrokit.sfml
+import pyrokit.opengl
+
+import rocket
 
 
 def main():
@@ -24,8 +29,19 @@ def main():
     shape0.origin = (25.0, 32.0)
 
     pyrokit.sfml.initializeSystem()
-    pyrokit.sfml.initializeRenderer(window)
+    #pyrokit.sfml.initializeRenderer(window)
+    pyrokit.opengl.initializeRenderer()
     pyrokit.manager.finishInitialization()
+
+    rocketContext = rocket.CreateContext('main', rocket.Vector2i(window.width, window.height))
+
+    os.chdir(os.path.dirname(__file__))
+    rocket.LoadFontFace("data/Delicious-Roman.otf")
+    rocket.LoadFontFace("data/Delicious-Bold.otf")
+    rocket.LoadFontFace("data/Delicious-BoldItalic.otf")
+    rocket.LoadFontFace("data/Delicious-Italic.otf")
+
+    rocketContext.LoadDocument('data/demo.rml').Show()
 
     running = True
     while running:
@@ -36,6 +52,9 @@ def main():
                 (event.type == sf.Event.KEY_PRESSED and event.code == sf.Keyboard.ESCAPE)):
                 running = False
 
+            else:
+                pyrokit.sfml.processEvent(rocketContext, event)
+
         shape0.rotate(1)
 
         window.clear(sf.Color.BLACK)
@@ -43,7 +62,7 @@ def main():
         #window.draw(sprite)
         window.draw(shape0)
 
-        pyrokit.manager.render()
+        pyrokit.manager.render(None)
 
         window.display()
 

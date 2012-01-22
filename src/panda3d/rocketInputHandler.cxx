@@ -154,7 +154,11 @@ void RocketInputHandler::do_transmit_data(DataGraphTraverser *trav, const DataNo
 
 				case ButtonEvent::T_keystroke:
 				{
-					_text_input.push_back(be._keycode);
+					// Ignore control characters; otherwise, they actually get added to strings in the UI.
+					if (be._keycode > 0x1F and (be._keycode < 0x7F or be._keycode > 0x9F))
+					{
+						_text_input.push_back(be._keycode);
+					} // end if
 					break;
 				} // end case
 

@@ -29,8 +29,8 @@
 	</head>
 	<body template="window">
 		This is a sample.
-		<input type="text" onchange="print 'Input Value Changed:', self.value" onclick="print 'Input Clicked!'" onfocus="print 'Input Focused!'" onblur="print 'Input UnFocused!'" value="Type here."/>
-		<textarea onchange="print 'TA Value Changed:', self.value" onclick="print 'TA Clicked!'" onfocus="print 'TA Focused!'" onblur="print 'TA UnFocused!'">Words Go here.</textarea>
+		<input type="text" onchange="print 'Input Value Changed:', repr(self.value)" onclick="print 'Input Clicked!'" onfocus="print 'Input Focused!'" onblur="print 'Input UnFocused!'" value="Type here."/>
+		<textarea onchange="print 'TA Value Changed:', repr(self.value)" onclick="print 'TA Clicked!'" onfocus="print 'TA Focused!'" onblur="print 'TA UnFocused!'">Words Go here.</textarea>
 		<button onclick="print 'Button Clicked!'">Click Me!</button>
 	</body>
 </rml>
