@@ -172,13 +172,13 @@ def genExt_pylibrocket_panda3d(setupKwargs):
 def genExt_pylibrocket_sfml(setupKwargs):
     setupKwargs.setdefault('ext_modules', []).append(
             genCythonExtension(
-                'pylibrocket.sfml',
+                'pylibrocket.sf',
                 [
-                    'src/sfml/sfml.pyx',
+                'src/sf/sf.pyx',
                     ],
                 [
-                    'src/sfml/RenderInterfaceSFML.cpp',
-                    'src/sfml/SystemInterfaceSFML.cpp',
+                    'src/sf/RenderInterfaceSFML.cpp',
+                    'src/sf/SystemInterfaceSFML.cpp',
                     ],
                 language='c++',
                 include_dirs=[

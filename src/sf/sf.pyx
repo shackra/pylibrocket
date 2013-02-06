@@ -91,26 +91,26 @@ cpdef initializeRenderer(window):
     
     
 def processEvent(context, event):
-    if type(event) is sfml.Event.ResizeEvent and renderer != NULL:
+    if type(event) is sfml.window.ResizeEvent and renderer != NULL:
         renderer.Resize()
         
-    elif type(event) is sfml.Event.MouseMoveEvent:
+    elif type(event) is sfml.window.MouseMoveEvent:
         processMouseMove(context, event)
         
-    elif type(event) is sfml.Event.MouseButtonEvent:
+    elif type(event) is sfml.window.MouseButtonEvent:
         if event.pressed:
             processMouseButtonPressed(context, event)
             
         if event.released:
             processMouseButtonReleased(context, event)
             
-    elif type(event) is sfml.Event.MouseWheelEvent:
+    elif type(event) is sfml.window.MouseWheelEvent:
         processMouseWheelMoved(context, event)
         
-    elif type(event) is sfml.Event.TextEvent:
+    elif type(event) is sfml.window.TextEvent:
         processTextEntered(context, event)
         
-    elif type(event) is sfml.Event.KeyEvent:
+    elif type(event) is sfml.window.KeyEvent:
         if event.pressed:
             processKeyPressed(context, event)
             
@@ -160,4 +160,3 @@ def processKeyReleased(context, event):
     
     cppContextFromPy(context).ProcessKeyUp(systemInterface.TranslateKey(
             event.code), systemInterface.GetKeyModifiers())
-    

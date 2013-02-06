@@ -2,6 +2,8 @@ syntax: glob
 
 # setup.py artifacts
 build/**
+dist/**
+*.egg-info*
 
 # pycharm artifacts
 .idea**

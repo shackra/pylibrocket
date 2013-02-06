@@ -1,7 +1,7 @@
 """Initialize the OpenGL render interface.
 
 """
-import pyrokit
+import pylibrocket
 
 
 cdef extern from "ShellRenderInterfaceOpenGL.h":
@@ -22,5 +22,5 @@ def framePostContext(context):
 
 def initializeRenderer():
     initializeOpenGLRenderer()
-    pyrokit.manager.addFramePreContextCallback(framePreContext)
-    pyrokit.manager.addFramePostContextCallback(framePostContext)
+    pylibrocket.manager.addFramePreContextCallback(framePreContext)
+    pylibrocket.manager.addFramePostContextCallback(framePostContext)
