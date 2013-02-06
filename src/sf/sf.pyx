@@ -1,5 +1,5 @@
+# coding: utf-8
 """Initialize SFML integration.
-
 """
 from libcpp cimport bool
 
@@ -146,9 +146,11 @@ def processMouseWheelMoved(context, event):
         systemInterface.GetKeyModifiers())
     
 def processTextEntered(context, event):
-    cdef StringBase[char]* text = new StringBase[char](<char*> event.unicode)
+    unicodechr = chr(event.unicode)
+    cdef StringBase[char]* text = new StringBase[char](<char*> unicodechr)
     cppContextFromPy(context).ProcessTextInput(text[0])
     del text
+    del unicodechr
     
 def processKeyPressed(context, event):
     cppContextFromPy(context).ProcessKeyDown(systemInterface.TranslateKey(

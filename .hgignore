@@ -12,6 +12,10 @@ dist/**
 # vim artifacts
 **.swp
 **.swo
+*~
+
+# emacs artifacts
+\#*
 
 # run artifacts
 **.log
