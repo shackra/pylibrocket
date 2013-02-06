@@ -30,17 +30,17 @@
 int RocketSFMLSystemInterface::GetKeyModifiers()
 {
 	int Modifiers = 0;
-
-	if(sf::Keyboard::IsKeyPressed(sf::Keyboard::LShift) ||
-		sf::Keyboard::IsKeyPressed(sf::Keyboard::RShift))
+	
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) ||
+		sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
 		Modifiers |= Rocket::Core::Input::KM_SHIFT;
 
-	if(sf::Keyboard::IsKeyPressed(sf::Keyboard::LControl) ||
-		sf::Keyboard::IsKeyPressed(sf::Keyboard::RControl))
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) ||
+		sf::Keyboard::isKeyPressed(sf::Keyboard::RControl))
 		Modifiers |= Rocket::Core::Input::KM_CTRL;
 
-	if(sf::Keyboard::IsKeyPressed(sf::Keyboard::LAlt) ||
-		sf::Keyboard::IsKeyPressed(sf::Keyboard::RAlt))
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt) ||
+	   sf::Keyboard::isKeyPressed(sf::Keyboard::RAlt))
 		Modifiers |= Rocket::Core::Input::KM_ALT;
 
 	return Modifiers;
@@ -306,7 +306,7 @@ Rocket::Core::Input::KeyIdentifier RocketSFMLSystemInterface::TranslateKey(sf::K
 
 float RocketSFMLSystemInterface::GetElapsedTime()
 {
-	return timer.GetElapsedTime();
+    return timer.getElapsedTime().asSeconds();
 };
 
 bool RocketSFMLSystemInterface::LogMessage(Rocket::Core::Log::Type type, const Rocket::Core::String& message)

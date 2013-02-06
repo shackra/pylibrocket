@@ -1,4 +1,5 @@
-#!/usr/bin/python
+#!/usr/bin/env python2
+# encoding: utf-8
 
 import os
 import sys
@@ -19,31 +20,31 @@ tryCodeGeneration = True
 if '--no-generate' in sys.argv:
     sys.argv.remove('--no-generate')
     tryCodeGeneration = False
-
+    
 # If code generation wasn't explicitly disabled, try importing cythonize so we
 # can enable code generation.
-generateCode = False
+    generateCode = False
 if tryCodeGeneration:
     try:
         from Cython.Build import cythonize
-
+        
     except ImportError:
         print "setup.py: You don't seem to have Cython installed. You can get"
         print "it from www.cython.org."
         print "setup.py: Continuing build using the last translated sources;"
         print "any updates to the .pyx files will be IGNORED."
-
+        
     else:
         generateCode = True
-
-
+        
+        
 def genCythonExtension(name, cythonSources, otherSources, **kwargs):
     """Helper function to generate a Cython-based extension definition.
-
+    
     If Cython can be imported (see check above), return an Extension which uses
     Cython to generate C/C++ source files; otherwise, return an Extension which
     attempts to use pre-generated source files.
-
+    
     """
     if generateCode:
         return Extension(
@@ -51,47 +52,47 @@ def genCythonExtension(name, cythonSources, otherSources, **kwargs):
                 otherSources + cythonSources,
                 **kwargs
                 )
-
+    
     else:
         targetExtension = '.c'
         if kwargs.get('language', 'c') == 'c++':
             targetExtension = '.cpp'
-
+            
         def translateCythonSourceFilename(cythonSource):
             if not cythonSource.endswith('.pyx'):
                 warnings.warn("Cython source file %r doesn't end with '.pyx'!"
                         % (cythonSource, ),
                         RuntimeWarning
                         )
-
+                
             translatedFilename = cythonSource.replace('.pyx', targetExtension)
-
+            
             if not os.path.exists(translatedFilename):
                 raise RuntimeError("Generated source file %r doesn't exist!"
                         % (translatedFilename, )
                         )
-
+            
             return translatedFilename
-
+        
         preGeneratedCythonSources = [
                 translateCythonSourceFilename(sourceFile)
                 for sourceFile in cythonSources
                 ]
-
+        
         return Extension(
                 name,
                 otherSources + preGeneratedCythonSources,
                 **kwargs
                 )
-
-
-def genExt_pyrokit(setupKwargs):
-    setupKwargs.setdefault('package_dir', {})['pyrokit'] = 'src'
-    setupKwargs.setdefault('packages', []).append('pyrokit')
-
+    
+    
+def genExt_pylibrocket(setupKwargs):
+    setupKwargs.setdefault('package_dir', {})['pylibrocket'] = 'src'
+    setupKwargs.setdefault('packages', []).append('pylibrocket')
+    
     setupKwargs.setdefault('ext_modules', []).append(
             genCythonExtension(
-                'pyrokit.rocket_init',
+                'pylibrocket.rocket_init',
                 [
                     'src/rocket_init.pyx',
                     ],
@@ -102,12 +103,12 @@ def genExt_pyrokit(setupKwargs):
                     ],
                 )
             )
-
-
-def genExt_pyrokit_opengl(setupKwargs):
+    
+    
+def genExt_pylibrocket_opengl(setupKwargs):
     setupKwargs.setdefault('ext_modules', []).append(
             genCythonExtension(
-                'pyrokit.opengl',
+                'pylibrocket.opengl',
                 [
                     'src/opengl/opengl.pyx',
                     ],
@@ -125,12 +126,12 @@ def genExt_pyrokit_opengl(setupKwargs):
                     ],
                 )
             )
-
-
-def genExt_pyrokit_panda3d(setupKwargs):
+    
+    
+def genExt_pylibrocket_panda3d(setupKwargs):
     setupKwargs.setdefault('ext_modules', []).append(
             genCythonExtension(
-                'pyrokit.panda3d',
+                'pylibrocket.panda3d',
                 [
                     'src/panda3d/panda3d.pyx',
                     ],
@@ -166,12 +167,12 @@ def genExt_pyrokit_panda3d(setupKwargs):
                     ],
                 )
             )
-
-
-def genExt_pyrokit_sfml(setupKwargs):
+    
+    
+def genExt_pylibrocket_sfml(setupKwargs):
     setupKwargs.setdefault('ext_modules', []).append(
             genCythonExtension(
-                'pyrokit.sfml',
+                'pylibrocket.sfml',
                 [
                     'src/sfml/sfml.pyx',
                     ],
@@ -191,26 +192,30 @@ def genExt_pyrokit_sfml(setupKwargs):
                     ],
                 )
             )
-
-
+    
+    
 setupKwargs = dict(
-        name='pyrokit',
+        name='pylibrocket',
         version=version,
         description='Bootstrap librocket from Python',
-        author='whitelynx',
-        author_email='whitelynx@gmail.com',
-        license='MIT',
-        url='http://bitbucket.org/skewedaspect/pyrokit',
+        author="Shackra Sislock",
+        #author='whitelynx',
+        author_email="jorgean@lavabit.com",
+        #author_email='whitelynx@gmail.com',
+        license="LGPL3",
+        #license='MIT',
+        url="https://bitbucket.org/shackra/pylibrocket",
+        #url='http://bitbucket.org/skewedaspect/pyrokit',
         )
 
 # Add enabled extensions
-genExt_pyrokit(setupKwargs)
-genExt_pyrokit_opengl(setupKwargs)
-genExt_pyrokit_panda3d(setupKwargs)
-genExt_pyrokit_sfml(setupKwargs)
+genExt_pylibrocket(setupKwargs)
+genExt_pylibrocket_opengl(setupKwargs)
+#genExt_pylibrocket_panda3d(setupKwargs) # Ignoramos la integración con Panda3D
+genExt_pylibrocket_sfml(setupKwargs)
 
 if generateCode and 'ext_modules' in setupKwargs:
     setupKwargs['ext_modules'] = cythonize(setupKwargs['ext_modules'])
-
+    
 # Make it a distribution!
 setup(**setupKwargs)
