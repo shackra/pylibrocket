@@ -6,9 +6,11 @@ This are bindings for SFML's bindings on Python.
 
 first be sure to have [librocket installed on your system with it's respective python bindings](http://librocket.com/wiki/documentation/BuildingWithCMake#Configuration), then clone this repository:
 
-`$ hg clone https://bitbucket.org/shackra/pylibrocket
+```
+$ hg clone https://bitbucket.org/shackra/pylibrocket
 $ cd pylibrocket
 $ python2 setup.py build
-# python2 setup.py install`
+# python2 setup.py install
+```
 
 And that's all!!
