@@ -1,5 +1,14 @@
-Here's how we're running it:
+libRocket is the C++ user interface middleware package based on the HTML and CSS standards. It is designed as a complete solution for any project's interface needs.
 
-    env PYTHONPATH=/home/whitelynx/devel/pyrokit/build/lib.linux-x86_64-2.7/ python2 examples/test.py
+This are bindings for SFML's bindings on Python.
 
-Try it. You'll like it.
+## How to install
+
+first be sure to have [librocket installed on your system with it's respective python bindings](http://librocket.com/wiki/documentation/BuildingWithCMake#Configuration), then clone this repository:
+
+`$ hg clone https://bitbucket.org/shackra/pylibrocket
+$ cd pylibrocket
+$ python2 setup.py build
+# python2 setup.py install`
+
+And that's all!!
