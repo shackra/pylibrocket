@@ -52,9 +52,8 @@ div#title-bar
 div#content
 {
     height: 100%;
-    overflow: auto;
-    
     z-index: 1;
+    overflow: scroll;
 }
 
 scrollbarvertical
