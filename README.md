@@ -1,6 +1,6 @@
 libRocket is the C++ user interface middleware package based on the HTML and CSS standards. It is designed as a complete solution for any project's interface needs.
 
-This are bindings for SFML's bindings on Python.
+This are bindings for SFML on Python.
 
 ## How to install
 

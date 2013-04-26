@@ -162,3 +162,8 @@ def processKeyReleased(context, event):
     
     cppContextFromPy(context).ProcessKeyUp(systemInterface.TranslateKey(
             event.code), systemInterface.GetKeyModifiers())
+
+def debugger():
+    """ Turn libRocket debugging On or Off.
+    """
+    Rocket.Debugger.SetVisible(not Rocket.Debugger.IsVisible())
